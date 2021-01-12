@@ -17,7 +17,7 @@ fi
 export PATH=$PATH:/usr/local/bin
 export NUXT_TELEMETRY_DISABLED=1
 
-CURRENTPATH=$(PWD)
+CURRENTPATH=$PWD
 
 
 echo ""
