@@ -22,7 +22,7 @@ CURRENTPATH=$PWD
 
 echo ""
 echo "------------------------------------------------------------------------------"
-echo "ffplayout domain name (like: example.org)"
+echo "ffplayout domain name (like: example.org), or IP"
 echo "------------------------------------------------------------------------------"
 echo ""
 
