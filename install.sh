@@ -17,6 +17,8 @@ fi
 export PATH=$PATH:/usr/local/bin
 export NUXT_TELEMETRY_DISABLED=1
 
+CURRENTPATH=$(PWD)
+
 
 echo ""
 echo "------------------------------------------------------------------------------"
@@ -32,7 +34,7 @@ read -p "domain name :$ " domainName
 ################################################################################
 
 # install system packages
-source /opt/ffplayout-installer/scripts/system.sh
+source $CURRENTPATH/scripts/system.sh
 
 # install app collection
 
@@ -56,7 +58,7 @@ if ! ffmpeg -version &> /dev/null; then
     done
 
     if [[ $compileFFmpeg == 'y' ]]; then
-        source /opt/ffplayout-installer/scripts/ffmpeg.sh
+        source $CURRENTPATH/scripts/ffmpeg.sh
     fi
 fi
 
@@ -80,7 +82,7 @@ if [[ ! -d /usr/local/srs ]]; then
     done
 
     if [[ $compileSRS == 'y' ]]; then
-        source /opt/ffplayout-installer/scripts/srs.sh
+        source $CURRENTPATH/scripts/srs.sh
     fi
 fi
 
@@ -108,9 +110,9 @@ if [[ -z "$playlistPath" ]]; then
     playlistPath="/opt/playlists"
 fi
 
-source /opt/ffplayout-installer/scripts/engine.sh
-source /opt/ffplayout-installer/scripts/api.sh
-source /opt/ffplayout-installer/scripts/frontend.sh
+source $CURRENTPATH/scripts/engine.sh
+source $CURRENTPATH/scripts/api.sh
+source $CURRENTPATH/scripts/frontend.sh
 
 if ! grep -q "ffplayout-engine.service" "/etc/sudoers"; then
   echo "$serviceUser  ALL = NOPASSWD: /bin/systemctl start ffplayout-engine.service, /bin/systemctl stop ffplayout-engine.service, /bin/systemctl reload ffplayout-engine.service, /bin/systemctl restart ffplayout-engine.service, /bin/systemctl status ffplayout-engine.service, /bin/systemctl is-active ffplayout-engine.service, /bin/journalctl -n 1000 -u ffplayout-engine.service" >> /etc/sudoers
