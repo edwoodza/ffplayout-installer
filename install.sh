@@ -32,7 +32,7 @@ read -p "domain name :$ " domainName
 ################################################################################
 
 # install system packages
-source /opt/ffplayout-installer/system.sh
+source /opt/ffplayout-installer/scripts/system.sh
 
 # install app collection
 
@@ -56,7 +56,7 @@ if ! ffmpeg -version &> /dev/null; then
     done
 
     if [[ $compileFFmpeg == 'y' ]]; then
-        source /opt/ffplayout-installer/ffmpeg.sh
+        source /opt/ffplayout-installer/scripts/ffmpeg.sh
     fi
 fi
 
@@ -80,7 +80,7 @@ if [[ ! -d /usr/local/srs ]]; then
     done
 
     if [[ $compileSRS == 'y' ]]; then
-        source /opt/ffplayout-installer/srs.sh
+        source /opt/ffplayout-installer/scripts/srs.sh
     fi
 fi
 
@@ -108,9 +108,9 @@ if [[ -z "$playlistPath" ]]; then
     playlistPath="/opt/playlists"
 fi
 
-source /opt/ffplayout-installer/engine.sh
-source /opt/ffplayout-installer/api.sh
-source /opt/ffplayout-installer/frontend.sh
+source /opt/ffplayout-installer/scripts/engine.sh
+source /opt/ffplayout-installer/scripts/api.sh
+source /opt/ffplayout-installer/scripts/frontend.sh
 
 if ! grep -q "ffplayout-engine.service" "/etc/sudoers"; then
   echo "$serviceUser  ALL = NOPASSWD: /bin/systemctl start ffplayout-engine.service, /bin/systemctl stop ffplayout-engine.service, /bin/systemctl reload ffplayout-engine.service, /bin/systemctl restart ffplayout-engine.service, /bin/systemctl status ffplayout-engine.service, /bin/systemctl is-active ffplayout-engine.service, /bin/journalctl -n 1000 -u ffplayout-engine.service" >> /etc/sudoers
@@ -121,7 +121,7 @@ if [[ "$(grep -Ei 'centos|fedora' /etc/*release)" ]]; then
     echo "------------------------------------------------------------------------------"
     echo "you run a rhel like system, which is no widely tested"
     echo "this OS needs some SeLinux rules"
-    echo "check selinux.sh if you can live with it, and run that script manually"
+    echo "check scripts/selinux.sh if you can live with it, and run that script manually"
     echo "------------------------------------------------------------------------------"
     echo ""
 fi
