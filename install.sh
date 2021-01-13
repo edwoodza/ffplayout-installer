@@ -19,7 +19,6 @@ export NUXT_TELEMETRY_DISABLED=1
 
 CURRENTPATH=$PWD
 
-
 echo ""
 echo "------------------------------------------------------------------------------"
 echo "ffplayout domain name (like: example.org), or IP"
@@ -27,16 +26,6 @@ echo "--------------------------------------------------------------------------
 echo ""
 
 read -p "domain name :$ " domainName
-
-
-################################################################################
-## Install functions
-################################################################################
-
-# install system packages
-source $CURRENTPATH/scripts/system.sh
-
-# install app collection
 
 if ! ffmpeg -version &> /dev/null; then
     echo ""
@@ -56,10 +45,6 @@ if ! ffmpeg -version &> /dev/null; then
                 );;
         esac
     done
-
-    if [[ $compileFFmpeg == 'y' ]]; then
-        source $CURRENTPATH/scripts/ffmpeg.sh
-    fi
 fi
 
 if [[ ! -d /usr/local/srs ]]; then
@@ -80,10 +65,6 @@ if [[ ! -d /usr/local/srs ]]; then
                 );;
         esac
     done
-
-    if [[ $compileSRS == 'y' ]]; then
-        source $CURRENTPATH/scripts/srs.sh
-    fi
 fi
 
 echo ""
@@ -110,6 +91,24 @@ if [[ -z "$playlistPath" ]]; then
     playlistPath="/opt/playlists"
 fi
 
+
+################################################################################
+## Install functions
+################################################################################
+
+# install system packages
+source $CURRENTPATH/scripts/system.sh
+
+# install app collection
+
+if [[ $compileFFmpeg == 'y' ]]; then
+    source $CURRENTPATH/scripts/ffmpeg.sh
+fi
+
+if [[ $compileSRS == 'y' ]]; then
+    source $CURRENTPATH/scripts/srs.sh
+fi
+
 source $CURRENTPATH/scripts/engine.sh
 source $CURRENTPATH/scripts/api.sh
 source $CURRENTPATH/scripts/frontend.sh
@@ -121,9 +120,15 @@ fi
 if [[ "$(grep -Ei 'centos|fedora' /etc/*release)" ]]; then
     echo ""
     echo "------------------------------------------------------------------------------"
-    echo "you run a rhel like system, which is no widely tested"
+    echo "you run a rhel like system, which is not widely tested"
     echo "this OS needs some SeLinux rules"
     echo "check scripts/selinux.sh if you can live with it, and run that script manually"
     echo "------------------------------------------------------------------------------"
     echo ""
 fi
+
+echo ""
+echo "------------------------------------------------------------------------------"
+echo "installation done..."
+echo "------------------------------------------------------------------------------"
+echo ""
