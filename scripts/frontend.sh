@@ -18,20 +18,19 @@ if [[ ! -d "/var/www/ffplayout-frontend" ]]; then
     tar xf "${versionFrontend}.tar.gz"
     mv "ffplayout-frontend-${versionFrontend#'v'}" 'ffplayout-frontend'
     rm "${versionFrontend}.tar.gz"
-    cd ffplayout-frontend
 
     ln -s "$mediaPath" /var/www/ffplayout-frontend/static/
-
-    npm install
-
-cat <<EOF > ".env"
+cat <<EOF > "ffplayout-frontend/.env"
 BASE_URL='http://$domainName'
 API_URL='/'
 EOF
 
-    npm run build
+    chown $serviceUser. -R /var/www/ffplayout-frontend
 
-    chown $serviceUser. -R /var/www
+    cd ffplayout-frontend
+
+    sudo -H -u $serviceUser bash -c 'npm install'
+    sudo -H -u $serviceUser bash -c 'npm run build'
 
     if [[ ! -f "$nginxConfig/ffplayout.conf" ]]; then
         cp docs/ffplayout.conf "$nginxConfig/"
