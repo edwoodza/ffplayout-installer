@@ -38,7 +38,7 @@ echo "--------------------------------------------------------------------------
 if [[ "$(grep -Ei 'debian|buntu|mint' /etc/*release)" ]]; then
     packages=(sudo curl wget net-tools git python3-dev build-essential virtualenv
               python3-virtualenv mediainfo autoconf automake libtool pkg-config
-              yasm cmake mercurial gperf)
+              yasm cmake mercurial gperf libssl-dev)
     installedPackages=$(dpkg --get-selections | awk '{print $1}' | tr '\n' ' ')
     apt update
 
@@ -67,7 +67,8 @@ if [[ "$(grep -Ei 'debian|buntu|mint' /etc/*release)" ]]; then
 elif [[ "$(grep -Ei 'centos|fedora' /etc/*release)" ]]; then
     packages=(libstdc++-static yasm mercurial libtool libmediainfo mediainfo
               cmake net-tools git python3 python36-devel wget python3-virtualenv
-              gperf nano nodejs python3-policycoreutils policycoreutils-devel)
+              gperf nano nodejs python3-policycoreutils policycoreutils-devel
+              openssl-devel)
     installedPackages=$(dnf list --installed | awk '{print $1}' | tr '\n' ' ')
     activeRepos=$(dnf repolist enabled | awk '{print $1}' | tr '\n' ' ')
 

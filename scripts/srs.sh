@@ -15,7 +15,7 @@ git clone https://github.com/ossrs/srs.git
 cd srs/trunk/
 git checkout 3.0release
 
-./configure
+./configure --use-sys-ssl
 make
 make install
 
