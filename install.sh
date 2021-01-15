@@ -25,7 +25,17 @@ echo "ffplayout domain name (like: example.org), or IP"
 echo "------------------------------------------------------------------------------"
 echo ""
 
-read -p "domain name :$ " domainName
+while true; do
+    read -p "domain name :$ " domainName
+
+    if [[ -z "$domainName" ]]; then
+        echo "------------------------------------"
+        echo "Please type a domain name or IP!"
+        echo ""
+    else
+        break
+    fi
+done
 
 if ! ffmpeg -version &> /dev/null; then
     echo ""
