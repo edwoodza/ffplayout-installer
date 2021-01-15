@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 
-versionFrontend="v2.1.5"
+versionFrontend="v2.2.0-r1"
 
 if [[ $(whoami) != 'root' ]]; then
     echo "This script must run under root!"
